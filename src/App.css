@@ -1,38 +1,196 @@
-.App {
+@import "~antd/dist/antd.css";
+
+body {
+  background-color: #eee;
+}
+
+.logo {
+  background-image: url(./images/logo.png);
+  background-size: contain;
+  background-repeat: no-repeat;
+  height: 100px;
+  margin: auto;
+}
+
+.logo span {
+  display: none;
+}
+
+.right {
+  float: right;
+}
+
+.pad-left {
+  padding-left: 24px;
+}
+
+/* Typography */
+
+h1,
+h2,
+h3,
+h4.ant-typography {
+  width: 100%;
+  color: #00b2b2;
+}
+
+h4.ant-typography {
+  font-size: 1em;
+}
+
+/* Links */
+
+a {
+  color: #00b2b2;
+}
+
+a:hover {
+  color: #00d5d5;
+}
+
+/* Layout */
+
+.footer {
+  background-color: #fff;
+  padding: 2em 0 4em;
+  border-top: 1px solid #ddd;
+}
+
+.login-modal .ant-modal-content {
+  background-color: #efefef;
+  box-shadow: 0px 0px 15px 0px;
+}
+
+.login-form .ant-input-affix-wrapper,
+.ant-btn {
+  border-radius: 0.5rem;
+}
+
+.ant-input-prefix {
+  margin-right: 10px;
+  padding-right: 6px;
+  border-right: 1px solid #888;
+}
+
+.ant-divider,
+.ant-divider-horizontal.ant-divider-with-text::before,
+.ant-divider-horizontal.ant-divider-with-text::after {
+  border-top-color: #ccc;
+}
+
+.login-form-forgot {
+  float: right;
+}
+
+.login-form-button {
+  width: 100%;
+  float: right;
+}
+
+.ant-checkbox-wrapper {
+  margin: 1rem 0 0;
+  width: 75%;
+  border: 2px solid #ccc;
+  background-color: #ddd;
+  border-radius: 0.5rem;
   text-align: center;
+  line-height: 3rem;
+  color: #ccc;
+  font-weight: bold;
+  transition: cubic-bezier(1, 0, 0, 1);
 }
 
-.App-logo {
-  height: 40vmin;
-  pointer-events: none;
-}
-
-@media (prefers-reduced-motion: no-preference) {
-  .App-logo {
-    animation: App-logo-spin infinite 20s linear;
-  }
-}
-
-.App-header {
-  background-color: #282c34;
-  min-height: 100vh;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  font-size: calc(10px + 2vmin);
+.ant-checkbox-wrapper-checked {
   color: white;
+  background-color: #00b2b2;
 }
 
-.App-link {
-  color: #61dafb;
+.ant-checkbox-wrapper:hover {
+  color: white;
+  background-color: #00d5d5;
 }
 
-@keyframes App-logo-spin {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
+.ant-checkbox-wrapper:active {
+  color: #ccc;
+  background-color: #eee;
+  border-color: #ccc;
+}
+
+.ant-checkbox {
+  display: none;
+}
+
+.ant-btn-primary {
+  color: #fff;
+  background-color: #00b2b2;
+  border-color: #ccc;
+  font-weight: bold;
+}
+
+.ant-btn-primary:hover,
+.ant-btn-primary:active,
+.ant-btn-primary:focus {
+  background-color: #00d5d5;
+  border-color: #ccc;
+}
+
+.ant-form-item-has-error .ant-input-prefix,
+.ant-form-item-has-error .ant-form-item-explain,
+.ant-form-item-has-error .ant-form-item-split {
+  color: #00b2b2;
+}
+
+.ant-form-item-has-error .ant-input,
+.ant-form-item-has-error .ant-input-affix-wrapper,
+.ant-form-item-has-error .ant-input:hover,
+.ant-form-item-has-error .ant-input-affix-wrapper:hover {
+  color: #00d5d5;
+  background-color: #fff;
+  border-color: #00d5d5;
+}
+
+.btn-card {
+  border: 3px solid #ccc;
+  margin: 0 0.5rem 1rem;
+  font-size: 5em;
+  font-weight: bold;
+  height: 10rem;
+  width: 7rem;
+  color: #555;
+}
+
+.btn-card:hover,
+.btn-card:active {
+  color: #00b2b2;
+  border-color: #bbb;
+}
+
+.ant-list-bordered,
+.ant-card-bordered {
+  border: 2px solid #cccccc;
+  background-color: white;
+  border-radius: 0.5em;
+  font-weight: bold;
+}
+
+.ant-list-header,
+.ant-card-head {
+  background-color: #00b2b2;
+  color: #fff;
+  font-size: 1.1em;
+  font-weight: bold;
+}
+
+.ant-row {
+  margin-top: 2rem;
+}
+
+.ant-row:first-of-type {
+  margin-top: 0;
+}
+
+.header {
+  padding: 1em 0;
+  background-color: #fff;
+  border-bottom: 1px solid #ddd;
 }

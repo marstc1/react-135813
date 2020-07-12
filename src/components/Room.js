@@ -1,25 +1,34 @@
 import React from "react";
+import { List } from "antd";
 
-const Room = ({ connectedUsers, showVotes }) => {
+import { CheckOutlined } from "@ant-design/icons";
+
+const Room = ({ connectedUsers, showVotes, roomNumber }) => {
+  const names = connectedUsers.map((x) => x.user);
+  console.log(names);
+
   return (
     <div>
-      <h2>The Room</h2>
-      {connectedUsers && (
-        <>
-          <ul>
-            {connectedUsers.map((connectedUser) => (
-              <li key={connectedUser.connectionId}>
-                {connectedUser.user.Name}
-                {connectedUser.user.Vote && (
-                  <span>
-                    {showVotes ? connectedUser.user.Vote : " - Voted"}
-                  </span>
+      <List
+        size='large'
+        header='Room Members'
+        bordered
+        dataSource={names}
+        renderItem={(item) => (
+          <List.Item>
+            {item.Name}
+            {item.Vote && (
+              <span className='right'>
+                {showVotes ? (
+                  item.Vote
+                ) : (
+                  <CheckOutlined style={{ color: "#00b2b2" }} />
                 )}
-              </li>
-            ))}
-          </ul>
-        </>
-      )}
+              </span>
+            )}
+          </List.Item>
+        )}
+      />
     </div>
   );
 };
