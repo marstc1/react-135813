@@ -11,7 +11,14 @@ const submitActions = {
   createRoom: "createRoom",
 };
 
-const LoginForm = ({ handleSubmit, handleCreateGroupClick, visible }) => {
+const LoginForm = ({
+  handleSubmit,
+  handleCreateGroupClick,
+  visible,
+  roomNotFound,
+}) => {
+  console.log(roomNotFound);
+
   const [selectedCards, setSelectedCards] = useState([
     "1",
     "3",
@@ -89,10 +96,15 @@ const LoginForm = ({ handleSubmit, handleCreateGroupClick, visible }) => {
                   required: submitAction === submitActions.joinRoom,
                   message: "Room number required",
                 },
-              ]}>
+              ]}
+              hasFeedback
+              validateStatus={roomNotFound && "error"}
+              help={roomNotFound && "Room not found"}>
               <Input
                 prefix={<ImportOutlined className='site-form-item-icon' />}
-                placeholder='13 58 13'
+                placeholder='135813'
+                type='text'
+                maxLength='6'
               />
             </Form.Item>
 
@@ -117,6 +129,11 @@ const LoginForm = ({ handleSubmit, handleCreateGroupClick, visible }) => {
                 defaultValue={selectedCards}
                 onChange={onChange}>
                 <Row>
+                  <Col style={{ textAlign: "center" }} span={4}>
+                    <Checkbox checked={true} value='0'>
+                      0
+                    </Checkbox>
+                  </Col>
                   <Col style={{ textAlign: "center" }} span={4}>
                     <Checkbox checked={true} value='1'>
                       1
@@ -153,9 +170,6 @@ const LoginForm = ({ handleSubmit, handleCreateGroupClick, visible }) => {
                   </Col>
                   <Col style={{ textAlign: "center" }} span={4}>
                     <Checkbox value='55'>55</Checkbox>
-                  </Col>
-                  <Col style={{ textAlign: "center" }} span={4}>
-                    <Checkbox value='89'>89</Checkbox>
                   </Col>
                   <Col style={{ textAlign: "center" }} span={4}>
                     <Checkbox value='C'>

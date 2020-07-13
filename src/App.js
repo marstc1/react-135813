@@ -6,6 +6,7 @@ import { HubConnectionBuilder } from "@microsoft/signalr";
 import { Button, notification, Row, Col, Card, Input, Typography } from "antd";
 
 import "./App.css";
+import logo from "./images/logo.png";
 import { SmileOutlined, UserOutlined, CoffeeOutlined } from "@ant-design/icons";
 
 import QRcode from "qrcode.react";
@@ -35,6 +36,7 @@ class App extends Component {
       showVotes: false,
       showResults: false,
       hubConnection: null,
+      roomNotFound: undefined,
     };
   }
 
@@ -55,6 +57,10 @@ class App extends Component {
 
       this.state.hubConnection.on("updateCards", (cards) => {
         this.setState({ cards });
+      });
+
+      this.state.hubConnection.on("updateGroupName", (groupName) => {
+        this.setState({ groupName });
       });
 
       this.state.hubConnection.on("updateConnectedUsers", (data) => {
@@ -82,24 +88,39 @@ class App extends Component {
 
       this.state.hubConnection.on("receiveMessage", (message) => {
         openNotification(message);
-        console.log(message);
+      });
+
+      this.state.hubConnection.on("roomNotFound", (roomNotFound) => {
+        this.setState({ roomNotFound: true });
       });
     });
   };
 
   joinGroup = (name, groupName) => {
+    this.setState({ name });
+
     this.state.hubConnection
       .invoke("JoinGroup", groupName, name)
       .catch((err) => console.error("Unable to join group!"));
-    this.setState({ name, groupName });
   };
 
   createGroup = (name, selectedCards) => {
-    console.log(name);
-    console.log(selectedCards.sort());
     this.setState({ name });
+
+    const numbers = [];
+    const chars = [];
+    selectedCards.forEach((a) => {
+      if (isNaN(a)) {
+        chars.push(a);
+      } else {
+        numbers.push(a);
+      }
+    });
+    const sortedCards = numbers.sort((a, b) => a - b).concat(chars.sort());
+    console.log(sortedCards);
+
     this.state.hubConnection
-      .invoke("CreateGroup", name, selectedCards)
+      .invoke("CreateGroup", name, sortedCards)
       .catch((err) => console.error("Unable to create group!"));
   };
 
@@ -121,6 +142,7 @@ class App extends Component {
           handleSubmit={this.joinGroup}
           handleCreateGroupClick={this.createGroup}
           visible={!this.state.groupName}
+          roomNotFound={this.state.roomNotFound}
         />
 
         {this.state.groupName && (
@@ -129,11 +151,14 @@ class App extends Component {
               <Col flex='1000px'>
                 <Row justify='space-between' align='bottom'>
                   <Col flex='300px'>
-                    <div className='logo'>
-                      <span>
-                        1 3 5 8 13 ... we dropped the 2, but you don't have to
-                      </span>
-                    </div>
+                    <a href='/'>
+                      <img
+                        alt="1 3 5 8 13 ... we dropped a two but you don't have to!"
+                        src={logo}
+                        width='100px'
+                        height='93px'
+                      />
+                    </a>
                   </Col>
 
                   <Col flex='300px'>
