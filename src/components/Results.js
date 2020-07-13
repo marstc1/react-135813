@@ -1,5 +1,5 @@
 import React from "react";
-import { Row, Button } from "antd";
+import { Button } from "antd";
 import { Doughnut } from "react-chartjs-2";
 
 const getTotalVotes = (results) => {
@@ -22,7 +22,10 @@ const getAverageVote = (results, totalVotes) => {
 };
 
 const getLabels = (results) => {
-  return results.map((card) => `${card.name} - ${card.count} votes`);
+  return results.map((card) => {
+    const cardName = card.name === "C" ? "Coffee" : card.name;
+    return `${cardName} - ${card.count} votes`;
+  });
 };
 
 const getData = (results) => {

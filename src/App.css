@@ -1,20 +1,6 @@
 @import "~antd/dist/antd.css";
 
-body {
-  background-color: #eee;
-}
-
-.logo {
-  background-image: url(./images/logo.png);
-  background-size: contain;
-  background-repeat: no-repeat;
-  height: 100px;
-  margin: auto;
-}
-
-.logo span {
-  display: none;
-}
+/* Utils */
 
 .right {
   float: right;
@@ -22,6 +8,10 @@ body {
 
 .pad-left {
   padding-left: 24px;
+}
+
+.small {
+  font-size: 0.8em;
 }
 
 /* Typography */
@@ -48,21 +38,9 @@ a:hover {
   color: #00d5d5;
 }
 
-/* Layout */
+/* Form Elements */
 
-.footer {
-  background-color: #fff;
-  padding: 2em 0 4em;
-  border-top: 1px solid #ddd;
-}
-
-.login-modal .ant-modal-content {
-  background-color: #efefef;
-  box-shadow: 0px 0px 15px 0px;
-}
-
-.login-form .ant-input-affix-wrapper,
-.ant-btn {
+.ant-input-affix-wrapper {
   border-radius: 0.5rem;
 }
 
@@ -78,46 +56,10 @@ a:hover {
   border-top-color: #ccc;
 }
 
-.login-form-forgot {
-  float: right;
-}
+/* Buttons */
 
-.login-form-button {
-  width: 100%;
-  float: right;
-}
-
-.ant-checkbox-wrapper {
-  margin: 1rem 0 0;
-  width: 75%;
-  border: 2px solid #ccc;
-  background-color: #ddd;
+.ant-btn {
   border-radius: 0.5rem;
-  text-align: center;
-  line-height: 3rem;
-  color: #ccc;
-  font-weight: bold;
-  transition: cubic-bezier(1, 0, 0, 1);
-}
-
-.ant-checkbox-wrapper-checked {
-  color: white;
-  background-color: #00b2b2;
-}
-
-.ant-checkbox-wrapper:hover {
-  color: white;
-  background-color: #00d5d5;
-}
-
-.ant-checkbox-wrapper:active {
-  color: #ccc;
-  background-color: #eee;
-  border-color: #ccc;
-}
-
-.ant-checkbox {
-  display: none;
 }
 
 .ant-btn-primary {
@@ -134,46 +76,38 @@ a:hover {
   border-color: #ccc;
 }
 
-.ant-form-item-has-error .ant-input-prefix,
-.ant-form-item-has-error .ant-form-item-explain,
-.ant-form-item-has-error .ant-form-item-split {
-  color: #00b2b2;
+/* Layout */
+
+.header {
+  padding: 1em 0;
+  border-bottom: 1px solid #ddd;
 }
 
-.ant-form-item-has-error .ant-input,
-.ant-form-item-has-error .ant-input-affix-wrapper,
-.ant-form-item-has-error .ant-input:hover,
-.ant-form-item-has-error .ant-input-affix-wrapper:hover {
-  color: #00d5d5;
-  background-color: #fff;
-  border-color: #00d5d5;
+.content {
+  background-color: #efefef;
 }
 
-.btn-card {
+.content.ant-row {
+  padding: 2em 0;
+}
+
+.content .btn-card {
   border: 3px solid #ccc;
-  margin: 0 0.5rem 1rem;
+  color: #555;
   font-size: 5em;
   font-weight: bold;
   height: 10rem;
+  margin: 0 0.5rem 1rem;
   width: 7rem;
-  color: #555;
 }
 
-.btn-card:hover,
-.btn-card:active {
-  color: #00b2b2;
+.content .btn-card:hover,
+.content .btn-card:active {
   border-color: #bbb;
+  color: #00b2b2;
 }
 
-.ant-list-bordered,
-.ant-card-bordered {
-  border: 2px solid #cccccc;
-  background-color: white;
-  border-radius: 0.5em;
-  font-weight: bold;
-}
-
-.ant-list-header,
+.content .ant-list-header,
 .ant-card-head {
   background-color: #00b2b2;
   color: #fff;
@@ -181,28 +115,88 @@ a:hover {
   font-weight: bold;
 }
 
-.ant-row {
-  margin-top: 2rem;
+.content .ant-list-bordered,
+.ant-card-bordered {
+  border: 2px solid #cccccc;
+  background-color: white;
+  border-radius: 0.5em;
+  font-weight: bold;
 }
 
-.ant-row:first-of-type {
-  margin-top: 0;
+.footer {
+  padding: 2em 0;
+  border-top: 1px solid #ddd;
+}
+/* Login Modal */
+
+.ant-modal-mask {
+  background-color: #555;
 }
 
-.header {
-  padding: 1em 0;
-  background-color: #fff;
-  border-bottom: 1px solid #ddd;
+.login-modal .ant-modal-content {
+  background-color: #efefef;
+  box-shadow: 0px 0px 15px 0px;
 }
 
-/* Chrome, Safari, Edge, Opera */
-input::-webkit-outer-spin-button,
-input::-webkit-inner-spin-button {
-  -webkit-appearance: none;
-  margin: 0;
+.login-modal .logo {
+  background-image: url(./images/logo.png);
+  background-size: contain;
+  background-repeat: no-repeat;
+  height: 100px;
+  margin: auto;
 }
 
-/* Firefox */
-input[type="number"] {
-  -moz-appearance: textfield;
+.login-modal .logo span {
+  display: none;
+}
+
+/* Login Form */
+
+.login-form .ant-row {
+  margin: 0.5rem 0;
+}
+
+.login-form-button {
+  width: 100%;
+}
+
+.login-form .cards-container .ant-col {
+  text-align: center;
+}
+
+.login-form .cards-container .ant-col .ant-checkbox + span {
+  padding: 0;
+}
+
+.login-form .checkbox-card.ant-checkbox-wrapper {
+  margin: 1rem 0 0;
+  width: 75%;
+  border: 2px solid #ccc;
+  background-color: #ddd;
+  border-radius: 0.5rem;
+  text-align: center;
+  line-height: 3rem;
+  color: #ccc;
+  font-weight: bold;
+  transition: cubic-bezier(1, 0, 0, 1);
+}
+
+.login-form .checkbox-card.ant-checkbox-wrapper-checked {
+  color: white;
+  background-color: #00b2b2;
+}
+
+.login-form .checkbox-card.ant-checkbox-wrapper:hover {
+  color: white;
+  background-color: #00d5d5;
+}
+
+.login-form .checkbox-card.ant-checkbox-wrapper:active {
+  color: #ccc;
+  background-color: #eee;
+  border-color: #ccc;
+}
+
+.login-form .checkbox-card .ant-checkbox {
+  display: none;
 }

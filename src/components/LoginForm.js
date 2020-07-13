@@ -1,24 +1,22 @@
 import React, { useState } from "react";
-import { Form, Input, Button, Checkbox, Row, Col, Divider, Modal } from "antd";
+import { Button, Checkbox, Col, Divider, Form, Input, Modal, Row } from "antd";
 import {
   CoffeeOutlined,
-  UserOutlined,
   ImportOutlined,
+  UserOutlined,
 } from "@ant-design/icons";
 
 const submitActions = {
-  joinRoom: "joinRoom",
   createRoom: "createRoom",
+  joinRoom: "joinRoom",
 };
 
 const LoginForm = ({
-  handleSubmit,
   handleCreateGroupClick,
-  visible,
+  handleSubmit,
   roomNotFound,
+  visible,
 }) => {
-  console.log(roomNotFound);
-
   const [selectedCards, setSelectedCards] = useState([
     "1",
     "3",
@@ -26,6 +24,21 @@ const LoginForm = ({
     "8",
     "13",
   ]);
+
+  const availableCards = [
+    "0",
+    "1",
+    "2",
+    "3",
+    "5",
+    "8",
+    "13",
+    "21",
+    "34",
+    "55",
+    "C",
+    "?",
+  ];
 
   const [submitAction, setSubmitAction] = useState(submitActions.joinRoom);
 
@@ -41,7 +54,6 @@ const LoginForm = ({
 
   const onChange = (checkedValues) => {
     setSelectedCards(checkedValues);
-    console.log(checkedValues);
   };
 
   return (
@@ -62,15 +74,13 @@ const LoginForm = ({
               height: "180px",
               width: "220px",
             }}>
-            <span>1 3 5 8 13 ... we dropped the 2, but you don't have to</span>
+            <span>1 3 5 8 13</span>
           </div>
           <Form
+            autoComplete='off'
             name='normal_login'
             className='login-form'
             size='large'
-            initialValues={{
-              remember: true,
-            }}
             onFinish={onFinish}>
             <Form.Item
               name='name'
@@ -120,7 +130,7 @@ const LoginForm = ({
               </Button>
             </Form.Item>
 
-            <Divider>or</Divider>
+            <Divider style={{ marginBottom: "0" }}>or</Divider>
 
             <Form.Item>
               <Checkbox.Group
@@ -128,72 +138,29 @@ const LoginForm = ({
                 style={{ width: "100%" }}
                 defaultValue={selectedCards}
                 onChange={onChange}>
-                <Row>
-                  <Col style={{ textAlign: "center" }} span={4}>
-                    <Checkbox checked={true} value='0'>
-                      0
-                    </Checkbox>
-                  </Col>
-                  <Col style={{ textAlign: "center" }} span={4}>
-                    <Checkbox checked={true} value='1'>
-                      1
-                    </Checkbox>
-                  </Col>
-                  <Col style={{ textAlign: "center" }} span={4}>
-                    <Checkbox value='2'>2</Checkbox>
-                  </Col>
-                  <Col style={{ textAlign: "center" }} span={4}>
-                    <Checkbox checked value='3'>
-                      3
-                    </Checkbox>
-                  </Col>
-                  <Col style={{ textAlign: "center" }} span={4}>
-                    <Checkbox checked value='5'>
-                      5
-                    </Checkbox>
-                  </Col>
-                  <Col style={{ textAlign: "center" }} span={4}>
-                    <Checkbox checked value='8'>
-                      8
-                    </Checkbox>
-                  </Col>
-                  <Col style={{ textAlign: "center" }} span={4}>
-                    <Checkbox checked value='13'>
-                      13
-                    </Checkbox>
-                  </Col>
-                  <Col style={{ textAlign: "center" }} span={4}>
-                    <Checkbox value='21'>21</Checkbox>
-                  </Col>
-                  <Col style={{ textAlign: "center" }} span={4}>
-                    <Checkbox value='34'>34</Checkbox>
-                  </Col>
-                  <Col style={{ textAlign: "center" }} span={4}>
-                    <Checkbox value='55'>55</Checkbox>
-                  </Col>
-                  <Col style={{ textAlign: "center" }} span={4}>
-                    <Checkbox value='C'>
-                      <CoffeeOutlined />
-                    </Checkbox>
-                  </Col>
-                  <Col style={{ textAlign: "center" }} span={4}>
-                    <Checkbox value='?'>?</Checkbox>
-                  </Col>
+                <Row className='cards-container'>
+                  {availableCards.map((card) => (
+                    <Col span={4} key={card}>
+                      <Checkbox className='checkbox-card' value={card}>
+                        {card === "C" ? <CoffeeOutlined /> : card}
+                      </Checkbox>
+                    </Col>
+                  ))}
                 </Row>
               </Checkbox.Group>
             </Form.Item>
 
-            <Form.Item
-              className='right'
-              style={{ width: "50%", display: "inline-block", margin: 0 }}>
-              <Button
-                onClick={() => setSubmitAction(submitActions.createRoom)}
-                type='primary'
-                htmlType='submit'
-                className='login-form-button'>
-                CREATE ROOM
-              </Button>
-            </Form.Item>
+            <Row justify='end'>
+              <Form.Item>
+                <Button
+                  onClick={() => setSubmitAction(submitActions.createRoom)}
+                  type='primary'
+                  htmlType='submit'
+                  className='login-form-button'>
+                  CREATE ROOM
+                </Button>
+              </Form.Item>
+            </Row>
           </Form>
         </Col>
       </Row>

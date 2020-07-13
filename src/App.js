@@ -3,13 +3,14 @@ import { LoginForm } from "./components/LoginForm";
 import { Results } from "./components/Results";
 import { Room } from "./components/Room";
 import { HubConnectionBuilder } from "@microsoft/signalr";
-import { Button, notification, Row, Col, Card, Input, Typography } from "antd";
+import { notification, Row, Col } from "antd";
 
 import "./App.css";
-import logo from "./images/logo.png";
-import { SmileOutlined, UserOutlined, CoffeeOutlined } from "@ant-design/icons";
+import { SmileOutlined } from "@ant-design/icons";
 
-import QRcode from "qrcode.react";
+import { Header } from "./components/Header";
+import { Footer } from "./components/Footer";
+import { Cards } from "./components/Cards";
 
 const openNotification = (message, description) => {
   notification.open({
@@ -18,8 +19,6 @@ const openNotification = (message, description) => {
     icon: <SmileOutlined style={{ color: "#00b2b2" }} />,
   });
 };
-
-const { Title } = Typography;
 
 class App extends Component {
   constructor(props) {
@@ -117,7 +116,6 @@ class App extends Component {
       }
     });
     const sortedCards = numbers.sort((a, b) => a - b).concat(chars.sort());
-    console.log(sortedCards);
 
     this.state.hubConnection
       .invoke("CreateGroup", name, sortedCards)
@@ -139,65 +137,26 @@ class App extends Component {
     return this.state.connected ? (
       <div className='App'>
         <LoginForm
+          visible={!this.state.groupName}
           handleSubmit={this.joinGroup}
           handleCreateGroupClick={this.createGroup}
-          visible={!this.state.groupName}
           roomNotFound={this.state.roomNotFound}
         />
 
         {this.state.groupName && (
           <>
-            <Row className='header' justify='center'>
-              <Col flex='1000px'>
-                <Row justify='space-between' align='bottom'>
-                  <Col flex='300px'>
-                    <a href='/'>
-                      <img
-                        alt="1 3 5 8 13 ... we dropped a two but you don't have to!"
-                        src={logo}
-                        width='100px'
-                        height='93px'
-                      />
-                    </a>
-                  </Col>
+            <Header name={this.state.name} roomNumber={this.state.groupName} />
 
-                  <Col flex='300px'>
-                    {this.state.name && (
-                      <Row className='pad-left' style={{ paddingTop: "2em" }}>
-                        <span
-                          style={{
-                            padding: "0.2rem 0.4rem",
-                            backgroundColor: "#00b2b2",
-                            borderRadius: "50%",
-                            color: "#fff",
-                            margin: "0rem 0.5rem 0 0",
-                          }}>
-                          <UserOutlined />
-                        </span>
-                        <span
-                          style={{ fontWeight: "bold", lineHeight: "1.8rem" }}>
-                          {this.state.name}
-                        </span>
-                      </Row>
-                    )}
-                  </Col>
-                </Row>
-              </Col>
-            </Row>
-
-            <Row justify='center'>
-              {this.state.cards && !this.state.showResults && (
-                <Col flex='700px' style={{ textAlign: "center" }}>
-                  {this.state.cards.map((cardName) => (
-                    <Button
-                      className='btn-card'
-                      disabled={this.state.lockCards}
-                      key={cardName}
-                      onClick={() => this.sendVote(cardName)}>
-                      {cardName}
-                    </Button>
-                  ))}
-                </Col>
+            <Row
+              className='content'
+              justify='center'
+              style={{ minHeight: "430px" }}>
+              {!this.state.showResults && (
+                <Cards
+                  cards={this.state.cards}
+                  handleOnClick={this.sendVote}
+                  disabled={this.state.lockCards}
+                />
               )}
 
               {this.state.showResults && this.state.results && (
@@ -211,115 +170,18 @@ class App extends Component {
 
               {this.state.groupName && this.state.connectedUsers && (
                 <Col flex='300px'>
-                  <Room
-                    connectedUsers={this.state.connectedUsers}
-                    showVotes={this.state.showVotes}
-                    roomNumber={this.state.groupName}
-                  />
-
-                  {this.state.groupName && (
-                    <Card
-                      title={`Join Room ${this.state.groupName}`}
-                      style={{ marginTop: "2rem" }}>
-                      <Row justify='center'>
-                        <QRcode
-                          value={`https://www.135813.com/${this.state.groupName.replace(
-                            /\s/g,
-                            ""
-                          )}`}
-                        />
-                      </Row>
-                      <Row>
-                        <Input
-                          defaultValue={`https://www.135813.com/${this.state.groupName.replace(
-                            /\s/g,
-                            ""
-                          )}`}
-                        />
-                      </Row>
-                    </Card>
-                  )}
+                  <Row style={{ width: "100%" }}>
+                    <Room
+                      connectedUsers={this.state.connectedUsers}
+                      showVotes={this.state.showVotes}
+                      roomNumber={this.state.groupName}
+                    />
+                  </Row>
                 </Col>
               )}
             </Row>
 
-            <Row className='footer' justify='center'>
-              <Col flex='1000px'>
-                <Row justify='space-between' align='top'>
-                  <Col flex='300px'>
-                    <Row>
-                      <Title level={4}>About</Title>
-                      <ul>
-                        <li>
-                          <a
-                            href='https://www.eleven-eleven.co.uk'
-                            target='_new'>
-                            Eleven Eleven
-                          </a>
-                        </li>
-                        <li>
-                          <a
-                            href='https://www.eleven-eleven.co.uk'
-                            target='_new'>
-                            Email Us
-                          </a>
-                        </li>
-                      </ul>
-                    </Row>
-
-                    <Row>
-                      <Title level={4}>Our Sites</Title>
-                      <ul>
-                        <li>
-                          <a
-                            href='https://www.eleven-eleven.co.uk'
-                            target='_new'>
-                            Super Stats
-                          </a>
-                        </li>
-                        <li>
-                          <a
-                            href='https://www.eleven-eleven.co.uk'
-                            target='_new'>
-                            Sudoku Solver
-                          </a>
-                        </li>
-                      </ul>
-                    </Row>
-                  </Col>
-
-                  <Col flex='300px'>
-                    <Row>
-                      <Title level={4}>Support</Title>
-                      <p>
-                        We believe there are pockets of the internet that can
-                        still be great. That's why this site has:
-                      </p>
-                      <ul>
-                        <li>No ads</li>
-                        <li>No social media</li>
-                        <li>No tracking</li>
-                        <li>No analytics</li>
-                        <li>No sponsored posts</li>
-                        <li>No affiliate links</li>
-                      </ul>
-                      <p>
-                        If you like what we do and would like to support me, you
-                        can do so below!
-                      </p>
-                      <Button type='primary' icon={<CoffeeOutlined />}>
-                        Buy me a coffee
-                      </Button>
-                    </Row>
-                  </Col>
-
-                  <Col flex='300px'>
-                    <Title level={4}>Custom Software Development</Title>
-                    <p>Eleven Eleven</p>
-                  </Col>
-                </Row>
-              </Col>
-            </Row>
+            <Footer />
           </>
         )}
       </div>
