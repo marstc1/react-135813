@@ -1,7 +1,7 @@
 import React from "react";
 import { List } from "antd";
 
-import { CheckOutlined } from "@ant-design/icons";
+import { CheckOutlined, CoffeeOutlined } from "@ant-design/icons";
 
 const Room = ({ connectedUsers, showVotes, roomNumber }) => {
   const names = connectedUsers.map((x) => x.user);
@@ -19,7 +19,11 @@ const Room = ({ connectedUsers, showVotes, roomNumber }) => {
           {item.Vote && (
             <span className='right'>
               {showVotes ? (
-                item.Vote
+                item.Vote === "C" ? (
+                  <CoffeeOutlined style={{ color: "#00b2b2" }} />
+                ) : (
+                  item.Vote
+                )
               ) : (
                 <CheckOutlined style={{ color: "#00b2b2" }} />
               )}

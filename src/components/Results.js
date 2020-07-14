@@ -7,16 +7,20 @@ const getTotalVotes = (results) => {
   return allVotes.reduce((a, b) => a + b, 0);
 };
 
-const getAverageVote = (results, totalVotes) => {
+const getAverageVote = (results) => {
+  const filteredResults = results.filter((poll) => !isNaN(poll.name));
+
+  const totalValidVotes = filteredResults
+    .map((poll) => poll.count)
+    .reduce((a, b) => a + b, 0);
+
   let sum = 0;
 
-  results.forEach((poll) => {
-    console.log(poll);
-    console.log(poll.name);
+  filteredResults.forEach((poll) => {
     sum += parseInt(poll.name) * poll.count;
   });
 
-  const average = sum / totalVotes;
+  const average = sum / totalValidVotes;
 
   return Math.round(average);
 };
@@ -39,7 +43,7 @@ function Results({ results, resetHandler }) {
     })
     .filter((poll) => poll.count !== 0);
   const totalVotes = getTotalVotes(results);
-  const averageVote = getAverageVote(results, totalVotes);
+  const averageVote = getAverageVote(results);
   const labels = getLabels(sortedResults);
   const data = getData(sortedResults);
   const chartData = {
@@ -95,12 +99,20 @@ function Results({ results, resetHandler }) {
     },
   };
 
+  const heading = (totalVotes, averageVote) => {
+    let str = totalVotes;
+
+    str += parseInt(totalVotes) > 1 ? " votes" : " vote";
+
+    str += !isNaN(averageVote) ? ` with an average of ${averageVote}` : "";
+
+    return str;
+  };
+
   return (
     results && (
       <div>
-        <h2>
-          {totalVotes} votes with an average of {averageVote}
-        </h2>
+        <h2>{heading(totalVotes, averageVote)}</h2>
 
         <Doughnut data={chartData} options={chartOptions} />
 

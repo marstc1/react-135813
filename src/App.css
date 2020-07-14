@@ -127,6 +127,15 @@ a:hover {
   padding: 2em 0;
   border-top: 1px solid #ddd;
 }
+
+.footer .ant-row {
+  margin-top: 2em;
+}
+
+.footer .ant-row:first-of-type {
+  margin-top: 0;
+}
+
 /* Login Modal */
 
 .ant-modal-mask {
@@ -139,7 +148,7 @@ a:hover {
 }
 
 .login-modal .logo {
-  background-image: url(./images/logo.png);
+  background-image: url(./images/logo-lg.gif);
   background-size: contain;
   background-repeat: no-repeat;
   height: 100px;

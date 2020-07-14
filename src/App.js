@@ -150,7 +150,7 @@ class App extends Component {
             <Row
               className='content'
               justify='center'
-              style={{ minHeight: "430px" }}>
+              style={{ minHeight: "480px" }}>
               {!this.state.showResults && (
                 <Cards
                   cards={this.state.cards}

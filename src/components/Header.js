@@ -4,7 +4,7 @@ import { Row, Col } from "antd";
 import { UserOutlined } from "@ant-design/icons";
 import QuickResponseCode from "qrcode.react";
 
-import logo from "../images/logo.png";
+import logo from "../images/logo-lg.gif";
 
 const propTypes = {
   name: PropTypes.string.isRequired,
@@ -23,8 +23,8 @@ const Header = ({ name, roomNumber }) => {
               <img
                 alt="1 3 5 8 13 ... we dropped a two but you don't have to!"
                 src={logo}
-                width='118px'
-                height='110px'
+                width='128px'
+                height='120px'
               />
             </a>
           </Col>
