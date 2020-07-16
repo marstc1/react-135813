@@ -1,17 +1,11 @@
 @import "~antd/dist/antd.css";
 
-/* Utils */
-
-.right {
-  float: right;
-}
-
-.pad-left {
-  padding-left: 24px;
-}
-
-.small {
-  font-size: 0.8em;
+.container {
+  width: 750px;
+  width: 970px;
+  width: 1170px;
+  padding-left: 15px;
+  padding-right: 15px;
 }
 
 /* Typography */
@@ -20,7 +14,6 @@ h1,
 h2,
 h3,
 h4.ant-typography {
-  width: 100%;
   color: #00b2b2;
 }
 
@@ -56,6 +49,11 @@ a:hover {
   border-top-color: #ccc;
 }
 
+.ant-checkbox-checked .ant-checkbox-inner {
+  background-color: #00b2b2;
+  border-color: #00b2b2;
+}
+
 /* Buttons */
 
 .ant-btn {
@@ -76,11 +74,27 @@ a:hover {
   border-color: #ccc;
 }
 
+/* Lists */
+
+ul {
+  list-style: square;
+  padding-left: 1.5rem;
+}
+
 /* Layout */
 
 .header {
   padding: 1em 0;
   border-bottom: 1px solid #ddd;
+}
+
+.header h1 {
+  margin: 0;
+}
+
+.header .logo {
+  width: 128px;
+  height: 120px;
 }
 
 .content {
@@ -128,12 +142,9 @@ a:hover {
   border-top: 1px solid #ddd;
 }
 
-.footer .ant-row {
-  margin-top: 2em;
-}
-
-.footer .ant-row:first-of-type {
-  margin-top: 0;
+.footer h4 {
+  width: 100%;
+  margin-top: 0.5rem;
 }
 
 /* Login Modal */
@@ -148,7 +159,7 @@ a:hover {
 }
 
 .login-modal .logo {
-  background-image: url(./images/logo-lg.gif);
+  background-image: url(./images/logo-hr.gif);
   background-size: contain;
   background-repeat: no-repeat;
   height: 100px;
@@ -208,4 +219,42 @@ a:hover {
 
 .login-form .checkbox-card .ant-checkbox {
   display: none;
+}
+
+/* Utils */
+
+.right {
+  float: right;
+}
+
+.pad-left {
+  padding-left: 24px;
+}
+
+.small {
+  font-size: 0.8em;
+}
+
+.strong {
+  font-weight: bold;
+}
+
+/* Media Queries */
+
+@media (max-width: 375px) {
+  .header .container {
+    text-align: center;
+  }
+
+  .header .logo {
+    width: 200px;
+    height: 190px;
+    margin-bottom: 1rem;
+  }
+
+  .content .btn-card {
+    width: 5rem;
+    height: 7rem;
+    font-size: 2.5em;
+  }
 }

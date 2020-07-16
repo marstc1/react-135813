@@ -16,7 +16,13 @@ const LoginForm = ({
   handleSubmit,
   roomNotFound,
   visible,
+  name,
 }) => {
+  const [rememberMe, setRememberMe] = useState({
+    checked: name,
+    disabled: false,
+  });
+
   const [selectedCards, setSelectedCards] = useState([
     "1",
     "3",
@@ -36,24 +42,29 @@ const LoginForm = ({
     "21",
     "34",
     "55",
-    "C",
     "?",
+    "C",
   ];
 
   const [submitAction, setSubmitAction] = useState(submitActions.joinRoom);
 
   const onFinish = (values) => {
+    console.log(values);
     const { name, roomNumber } = values;
 
     if (submitAction === submitActions.joinRoom) {
-      return handleSubmit(name, roomNumber);
+      return handleSubmit(name, roomNumber, rememberMe);
     }
 
-    return handleCreateGroupClick(name, selectedCards);
+    return handleCreateGroupClick(name, selectedCards, rememberMe);
   };
 
   const onChange = (checkedValues) => {
     setSelectedCards(checkedValues);
+  };
+
+  const updateRememberMe = ({ target }) => {
+    setRememberMe(target.checked);
   };
 
   return (
@@ -84,6 +95,7 @@ const LoginForm = ({
             onFinish={onFinish}>
             <Form.Item
               name='name'
+              initialValue={name}
               rules={[
                 {
                   required: true,
@@ -150,7 +162,16 @@ const LoginForm = ({
               </Checkbox.Group>
             </Form.Item>
 
-            <Row justify='end'>
+            <Row justify='space-between' align='bottom'>
+              <Form.Item>
+                <Checkbox
+                  defaultChecked={rememberMe.checked}
+                  disabled={rememberMe.disabled}
+                  onChange={updateRememberMe}>
+                  Remember me
+                </Checkbox>
+              </Form.Item>
+
               <Form.Item>
                 <Button
                   onClick={() => setSubmitAction(submitActions.createRoom)}

@@ -1,5 +1,5 @@
 import React from "react";
-import { Button } from "antd";
+import { Button, Row } from "antd";
 import { Doughnut } from "react-chartjs-2";
 
 const getTotalVotes = (results) => {
@@ -111,7 +111,7 @@ function Results({ results, resetHandler }) {
 
   return (
     results && (
-      <div>
+      <Row style={{ marginBottom: "2rem" }}>
         <h2>{heading(totalVotes, averageVote)}</h2>
 
         <Doughnut data={chartData} options={chartOptions} />
@@ -119,7 +119,7 @@ function Results({ results, resetHandler }) {
         <Button type='primary' onClick={() => resetHandler()}>
           Reset
         </Button>
-      </div>
+      </Row>
     )
   );
 }

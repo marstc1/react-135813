@@ -24,9 +24,11 @@ class App extends Component {
   constructor(props) {
     super(props);
 
+    const name = localStorage.getItem("135813_Name");
+
     this.state = {
       connected: false,
-      name: "",
+      name: name ? name : "",
       groupName: undefined,
       connectedUsers: undefined,
       cards: undefined,
@@ -41,7 +43,9 @@ class App extends Component {
 
   componentDidMount = () => {
     const hubConnection = new HubConnectionBuilder()
-      .withUrl("https://localhost:5001/vote")
+      .withUrl(
+        "http://135813-voting-hub-prod.eu-west-1.elasticbeanstalk.com/vote"
+      )
       .build();
 
     this.setState({ hubConnection }, () => {
@@ -95,7 +99,22 @@ class App extends Component {
     });
   };
 
-  joinGroup = (name, groupName) => {
+  saveMyDetails = (rememberMe, name, selectedCards) => {
+    if (rememberMe) {
+      name && localStorage.setItem("135813_Name", name);
+      selectedCards &&
+        localStorage.setItem(
+          "135813_SelectedCards",
+          JSON.stringify(selectedCards)
+        );
+    } else {
+      localStorage.removeItem("135813_Name");
+      localStorage.removeItem("135813_SelectedCards");
+    }
+  };
+
+  joinGroup = (name, groupName, rememberMe) => {
+    this.saveMyDetails(rememberMe, name);
     this.setState({ name });
 
     this.state.hubConnection
@@ -103,7 +122,7 @@ class App extends Component {
       .catch((err) => console.error("Unable to join group!"));
   };
 
-  createGroup = (name, selectedCards) => {
+  createGroup = (name, selectedCards, rememberMe) => {
     this.setState({ name });
 
     const numbers = [];
@@ -116,6 +135,8 @@ class App extends Component {
       }
     });
     const sortedCards = numbers.sort((a, b) => a - b).concat(chars.sort());
+
+    this.saveMyDetails(rememberMe, this.state.name, sortedCards);
 
     this.state.hubConnection
       .invoke("CreateGroup", name, sortedCards)
@@ -141,6 +162,7 @@ class App extends Component {
           handleSubmit={this.joinGroup}
           handleCreateGroupClick={this.createGroup}
           roomNotFound={this.state.roomNotFound}
+          name={this.state.name}
         />
 
         {this.state.groupName && (
@@ -151,34 +173,38 @@ class App extends Component {
               className='content'
               justify='center'
               style={{ minHeight: "480px" }}>
-              {!this.state.showResults && (
-                <Cards
-                  cards={this.state.cards}
-                  handleOnClick={this.sendVote}
-                  disabled={this.state.lockCards}
-                />
-              )}
-
-              {this.state.showResults && this.state.results && (
-                <Col flex='700px'>
-                  <Results
-                    results={this.state.results}
-                    resetHandler={this.resetVotes}
-                  />
-                </Col>
-              )}
-
-              {this.state.groupName && this.state.connectedUsers && (
-                <Col flex='300px'>
-                  <Row style={{ width: "100%" }}>
-                    <Room
-                      connectedUsers={this.state.connectedUsers}
-                      showVotes={this.state.showVotes}
-                      roomNumber={this.state.groupName}
+              <Row className='container'>
+                {!this.state.showResults && (
+                  <Col xs={24} md={16} style={{ textAlign: "center" }}>
+                    <Cards
+                      cards={this.state.cards}
+                      handleOnClick={this.sendVote}
+                      disabled={this.state.lockCards}
                     />
-                  </Row>
-                </Col>
-              )}
+                  </Col>
+                )}
+
+                {this.state.showResults && this.state.results && (
+                  <Col xs={24} md={16}>
+                    <Results
+                      results={this.state.results}
+                      resetHandler={this.resetVotes}
+                    />
+                  </Col>
+                )}
+
+                {this.state.groupName && this.state.connectedUsers && (
+                  <Col xs={24} md={8}>
+                    <Row style={{ width: "100%" }}>
+                      <Room
+                        connectedUsers={this.state.connectedUsers}
+                        showVotes={this.state.showVotes}
+                        roomNumber={this.state.groupName}
+                      />
+                    </Row>
+                  </Col>
+                )}
+              </Row>
             </Row>
 
             <Footer />
